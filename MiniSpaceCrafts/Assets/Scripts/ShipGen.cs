@@ -4,45 +4,28 @@ using System.Collections.Generic;
 
 public static class ShipGen {
 
-    static Dictionary<int, string> hulls = new Dictionary<int, string>();
-    static Dictionary<int, string> engines = new Dictionary<int, string>();
-    static Dictionary<int, string> cockpits = new Dictionary<int, string>();
-    static Dictionary<int, string> weaponControlls = new Dictionary<int, string>();
-    static Dictionary<int, string> weapons = new Dictionary<int, string>();
+    static Dictionary<int, Hull> hulls = new Dictionary<int, Hull>();
+    static Dictionary<int, Engine> engines = new Dictionary<int, Engine>();
+    static Dictionary<int, Cockpit> cockpits = new Dictionary<int, Cockpit>();
+    static Dictionary<int, Weapon> weapons = new Dictionary<int, Weapon>();
+    static Dictionary<int, Reactor> reactors = new Dictionary<int, Reactor>();
+
 
     public static void Data()
     {
-        //Ship hulls type-#roomSlots-#engineSlots-#weaponSlots
-        hulls.Add(0, "basic-2-1-1");
-        hulls.Add(10, "small-3-2-2");
-        hulls.Add(20, "normal-5-3-4");
-        hulls.Add(30, "big-7-4-6");
-        //Engines
-        engines.Add(0, "basic");
-        engines.Add(10, "small");
-        engines.Add(20, "normal");
-        engines.Add(30, "big");
-        //Cockpits
-        cockpits.Add(0, "basic");
-        cockpits.Add(10, "small");
-        cockpits.Add(20, "normal");
-        cockpits.Add(30, "big");
-        //Weapon Controllers
-        weaponControlls.Add(0, "basic");
-        weaponControlls.Add(10, "small");
-        weaponControlls.Add(20, "normal");
-        weaponControlls.Add(30, "big");
-        //Weapons
-        weapons.Add(0, "basic");
-        weapons.Add(10, "small");
-        weapons.Add(20, "normal");
-        weapons.Add(30, "big");
+        hulls.Add(0, new Hull("Basic Hull", "any", 0, 10, 5));
+        hulls.Add(10, new Hull("Iron Hull", "any", 10, 20, 10));
+        hulls.Add(20, new Hull("Steel Hull", "any", 20, 30, 15));
+        hulls.Add(30, new Hull("Charbon Fibre Hull", "any", 30, 40, 20));
+        hulls.Add(40, new Hull("Strong Hull", "any", 40, 50, 25));
+
+        engines.Add(0, new Engine());
     }
 
 
-    public static string GetShip(int level)
+    public static Ship GetShip(int level)
     {
-        string ship = "";
+        Ship ship = new Ship();
         
 
 
