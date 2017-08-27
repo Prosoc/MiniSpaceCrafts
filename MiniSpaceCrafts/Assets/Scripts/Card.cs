@@ -1,35 +1,27 @@
 ﻿using UnityEngine;
-using System.Collections;
-using TMPro;
-using UnityEngine.UI;
 
-public class Card : MonoBehaviour {
+public class Card{
 
-    TextMeshProUGUI cardName;
-    TextMeshProUGUI cardDescription;
+    public string Name;
+    public string Description;
+    public int EnergyNeed;
+    public Color Color;
 
-    // Use this for initialization
-    void Start () {
-        foreach (TextMeshProUGUI t in GetComponentsInChildren<TextMeshProUGUI>())
-        {
-            if (t.name == "name")
-            {
-                cardName = t;
-            }
-            else if (t.name == "description")
-            {
-                cardDescription = t;
-            }
-        }
 
-        cardName.text = "small laser shot";
-        cardDescription.text = "Your laser weapons shoot at the enemy ship's " + "Engines" + "\n\nUses: " + "1" + " energy.";
 
+    public Card(string name, string description, int energyNeed)
+    {
+        this.Name = name;
+        this.Description = description;
+        this.EnergyNeed = energyNeed;
     }
-	
-    
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    public delegate void use();
+    public event use UseEvent;
+
+    public void Use()
+    {
+        UseEvent();
+    }
+
 }

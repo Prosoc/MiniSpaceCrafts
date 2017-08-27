@@ -1,40 +1,21 @@
-﻿public class Weapon
+﻿public class Weapon : ShipPartBase
 {
-    public string name;
-    public string type;
-    public float maxHealth;
-    public float health;
-    public int level;
+    
     public int realoadTurns;
-    public int currentRealoadTurns;
-    public bool canShoot = true;
+    public int currentRealoadTurns = 0;
+    public float damage;
+    public float accuracy;
+    public WType weaponType;
     public bool isAimed = true;
 
-    public Weapon(string name, string type, float maxHealth, int level, int realoadTurns)
-    {
-        this.name = name;
-        this.type = type;
-        this.maxHealth = maxHealth;
-        this.health = maxHealth;
-        this.level = level;
-        this.realoadTurns = realoadTurns;
-        this.currentRealoadTurns = 0;
-    }
-
-    public void Shoot()
-    {
-        if (canShoot && isAimed)
-        {
-            canShoot = false;
-            currentRealoadTurns = 0;
-            Logger.Instance.Log("Weapon", name, "Weapon shot");
-        }
-        else
-        {
-            Logger.Instance.Log("Weapon", name, "Weapon can't shoot");
-        }
-    }
-
     
+
+    public Weapon(int level, string name, FType type, float damage, float maxHealth, int realoadTurns, float accuracy, WType weaponType) : base(level, name, type, maxHealth)
+    {
+        this.realoadTurns = realoadTurns;
+        this.damage = damage;
+        this.accuracy = accuracy;
+        this.weaponType = weaponType;
+    }
 }
 

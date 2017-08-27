@@ -11,10 +11,13 @@ public class GameLoop : MonoBehaviour {
     
 
 	void Start () {
-        ship = new Ship(new Hull("basic", "asd", 0, 100, 10), 5, 3, 2);
-        ship.AddWeapon(new Weapon("Small Laser", "small_laser", 10, 0, 1));
-        ship.AddWeapon(new Weapon("Large Laser", "large_laser", 10, 20, 3));
-        ship.AddEngine(new Engine());
+        ShipGen.Data();
+
+        ship = new Ship(5, 3, 2, 1);
+        ship.Hull = new Hull(0, "basic", FType.any, 100, 10);
+        ship.AddWeapon(ShipGen.GetWeapon(0, FType.any, WType.laser));
+        ship.AddWeapon(ShipGen.GetWeapon(0, FType.any, WType.kinetic));
+        ship.AddEngine(new Engine(0, "Basic Engine", FType.any, 0, 2, 5, 0.15f));
 
 	}
 
@@ -22,23 +25,6 @@ public class GameLoop : MonoBehaviour {
     {
 
     }
-
-    public void Shoot()
-    {
-        if (ship != null)
-        {
-            ship.ShootWeapons();
-        }
-    }
-
-    public void MoveToSelectedPos()
-    {
-
-    }
-
-    public void LoopN()
-    {
-        EventHandler.OnLoopFunctions();
-    }
+    
 
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Ship{
 
-    public Hull hull;
+    public Hull Hull;
     public int maxRoomNum = 3;
     public int currentRoomNum = 0;
     public ShipPartBase[] rooms;
@@ -24,27 +24,17 @@ public class Ship{
     public Ship() { }
     
 
-    public Ship(Hull hull, int maxRoomNum, int maxEngineNum, int maxWeaponNum)
+    public Ship(int maxRoomNum, int maxEngineNum, int maxWeaponNum, int maxShieldNum)
     {
-        this.hull = hull;
-
         this.maxRoomNum = maxRoomNum;
         this.maxEngineNum = maxEngineNum;
         this.maxWeaponNum = maxWeaponNum;
+        this.maxShieldNum = maxShieldNum;
 
         this.rooms = new ShipPartBase[this.maxRoomNum];
-        Cockpit = PlaceRoomToRandomPos(new Cockpit(100, 1, 0));
-        Crewquarters.Add((CrewQuarter)PlaceRoomToRandomPos(new CrewQuarter(100, 4, 0)));
-        Reactors.Add((Reactor)PlaceRoomToRandomPos(new Reactor(100, 10, 0.1f, 0)));
+       
     }
     
-    public void ShootWeapons()
-    {
-        foreach (Weapon w in Weapons)
-        {            
-            w.Shoot();
-        }
-    }
     
     public bool AddWeapon(Weapon w)
     {
@@ -67,6 +57,18 @@ public class Ship{
             return true;
         }
         Debug.Log("Can't add engine to ship: " + e.name);
+        return false;
+    }
+
+    public bool AddShield(Shield s)
+    {
+        if (currentShieldNum < maxShieldNum)
+        {
+            currentEngineNum++;
+            Shields.Add(s);
+            return true;
+        }
+        Debug.Log("Can't add shield to ship: " + s.name);
         return false;
     }
 

@@ -1,13 +1,14 @@
-﻿public class Cockpit : ShipPartBase
+﻿using System.Collections.Generic;
+
+public class Cockpit : ShipPartBase
 {
     public int maxPilotNumber;
-    public Crew[] pilots;
+    public List<Crew> pilots = new List<Crew>();
 
-    public Cockpit(float maxHealth, int maxPilotNumber, int level) : base(maxHealth, level)
+    
+    public Cockpit(int level, string name, FType type, float maxHealth, int maxPilotNumber) : base(level, name, type, maxHealth)
     {
         this.maxPilotNumber = maxPilotNumber;
-        this.pilots = new Crew[this.maxPilotNumber];
-        this.level = level;
     }
 }
 

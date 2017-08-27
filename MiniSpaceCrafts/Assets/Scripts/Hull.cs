@@ -2,8 +2,8 @@
 {    
     public float maxArmour;
     public float armour;
-    
-    public Hull(string name, string type, float maxHealth, int level, float maxArmour) : base(name, type, maxHealth, level)
+
+    public Hull(int level, string name, FType type, float maxHealth, float maxArmour) : base(level, name, type, maxHealth)
     {
         this.maxArmour = maxArmour;
         this.armour = maxArmour;

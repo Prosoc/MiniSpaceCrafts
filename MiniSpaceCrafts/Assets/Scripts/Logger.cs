@@ -22,7 +22,7 @@ public sealed class Logger
         }
     }
 
-    public void Log(string type, string id, string text)
+    public void Log(FType type, string id, string text)
     {
         string txt = string.Format("[{0} - {1}] {2}", type, id, text);
         //log.Add(txt);

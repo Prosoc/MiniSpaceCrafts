@@ -7,7 +7,7 @@ public class Shield : ShipPartBase
     public float layerRegenTurnTime;
     public float energyPerFastRegenCard;
 
-    public Shield(float maxHealth, int level, int layers, float layerRegenTurnTime, float energyPerFastRegenCard) : base(maxHealth, level)
+    public Shield(int level, string name, FType type, float maxHealth, int layers, float layerRegenTurnTime, float energyPerFastRegenCard) : base(level, name, type, maxHealth)
     {
         this.layers = layers;
         this.layerRegenTurnTime = layerRegenTurnTime;

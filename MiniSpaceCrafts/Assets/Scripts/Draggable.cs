@@ -10,6 +10,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 	public Transform parentToReturnTo = null;
 	public Transform placeholderParent = null;
 
+    public Transform travelLayer = null;
+
 	GameObject placeholder = null;
 
     bool down;
@@ -19,16 +21,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (eventData.pointerDrag == null)
-        {
-            ////Debug.Log("p enter");
-            //GetComponent<CanvasGroup>().blocksRaycasts = true;
-            //transform.localScale = new Vector3(1.1f, 1.1f, 1);
+        {           
             hovered = true;
         }
         else
         {
-            //GetComponent<CanvasGroup>().blocksRaycasts = false;
-            //transform.localScale = new Vector3(1, 1, 1);
             hovered = false;
         }
 
@@ -37,16 +34,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         //if not dragging already
         if (eventData.pointerDrag == null)
-        {
-            ////Debug.Log("p exit");
-            //GetComponent<CanvasGroup>().blocksRaycasts = true;
-            //transform.localScale = new Vector3(1, 1, 1);
+        {            
             hovered = false;
         }
         else
-        {
-            //transform.localScale = new Vector3(1, 1, 1);
-            //GetComponent<CanvasGroup>().blocksRaycasts = true;
+        {            
             hovered = false;
         }
     }
@@ -54,7 +46,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnBeginDrag(PointerEventData eventData) {
         //Debug.Log ("OnBeginDrag");
         
-        placeholder = new GameObject(); //create placeholder for card while dragging 
+        placeholder = new GameObject("PlaceHolder"); //create placeholder for card while dragging 
 
 
         //this.transform.parent.GetComponent<HorizontalLayout>().AddChildToPos(this.transform.GetSiblingIndex(), placeholder.transform); //set it's parent to the cards parent
@@ -65,7 +57,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         placeholder.AddComponent<RectTransform>();
 		parentToReturnTo = this.transform.parent; //set the card's parent
 		placeholderParent = parentToReturnTo;
-		this.transform.SetParent( this.transform.parent.parent );
+		this.transform.SetParent(travelLayer);
 		
 		GetComponent<CanvasGroup>().blocksRaycasts = false;
 	}
@@ -97,7 +89,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 		}
 
 		placeholder.transform.SetSiblingIndex(newSiblingIndex); //set it's place in layout
-
     }
 	
 	public void OnEndDrag(PointerEventData eventData) {
@@ -108,6 +99,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
 
         this.transform.transform.SetParent(placeholderParent);
+        this.transform.localPosition = placeholder.GetComponent<Transform>().localPosition;
         this.transform.transform.SetSiblingIndex(placeholder.transform.GetSiblingIndex());
         GetComponent<CanvasGroup>().blocksRaycasts = true;
         //placeholder.transform.parent.GetComponent<HorizontalLayout>().RemoveChild(placeholder.transform);
@@ -115,4 +107,17 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         Destroy(placeholder);
 
     }
+
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+    //    if (placeholder == null)
+    //    {
+    //        Gizmos.DrawSphere(transform.position + new Vector3(0,0,-2), 4);
+    //    }
+    //    else
+    //    {
+    //        Gizmos.DrawSphere(placeholder.transform.position + new Vector3(0, 0, -2), 4);
+    //    }
+    //}
 }

@@ -1,12 +1,15 @@
-﻿public class ShipPartBase
+﻿using System.Collections.Generic;
+
+public partial class ShipPartBase
 {
     public string name;
-    public string type;
+    public FType type;
     public float maxHealth;
     public float health;
     public int level;
+    public List<Card> deck = new List<Card>();
 
-    public ShipPartBase(string name, string type, float maxHealth, int level)
+    public ShipPartBase(int level, string name, FType type, float maxHealth)
     {
         this.name = name;
         this.type = type;
@@ -14,14 +17,14 @@
         this.health = maxHealth;
         this.level = level;
     }
-    public ShipPartBase(string name, float maxHealth, int level)
+    public ShipPartBase(int level, string name, float maxHealth)
     {
         this.name = name;
         this.maxHealth = maxHealth;
         this.health = maxHealth;
         this.level = level;
     }
-    public ShipPartBase(float maxHealth, int level)
+    public ShipPartBase(int level, float maxHealth)
     {
         this.maxHealth = maxHealth;
         this.health = maxHealth;

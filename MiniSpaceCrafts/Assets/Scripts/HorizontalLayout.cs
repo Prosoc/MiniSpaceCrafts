@@ -9,6 +9,7 @@ public class HorizontalLayout : MonoBehaviour {
     public float space;
     float insideSpace;
 
+    public Transform travelParent;
 
     public bool recalc;
     RectTransform Rect; 
@@ -24,7 +25,7 @@ public class HorizontalLayout : MonoBehaviour {
         children.Clear();
         foreach (Transform t in transform)
         {
-            children.Add(t);
+            t.GetComponent<Draggable>().travelLayer = travelParent;
         }
     }
 	
@@ -49,53 +50,43 @@ public class HorizontalLayout : MonoBehaviour {
             for (int i = 0; i < transform.childCount; i++)
             {
 
-
-                //Transform t = children[i];
-
-
                 Transform t = transform.GetChild(i);
                 float num = ((float)i - (float)(transform.childCount) / 2 + 0.5f) * (elementWidth + insideSpace);
                 //Debug.Log(num);
                 RectTransform r = t.GetComponent<RectTransform>();
+                
+                
                 if (t.GetComponent<Draggable>() && t.GetComponent<Draggable>().hovered)
-                {
-                    r.localPosition = new Vector3(num, 6, 0);
-                    //r.localScale = new Vector3(1.1f, 1.1f, 1);
+                {                    
+                    if (Vector3.Distance(r.localPosition, new Vector3(num, 0)) < 100)
+                    {
+                        r.localPosition = new Vector3(Mathf.Lerp(r.localPosition.x, num, Time.deltaTime * 15), Mathf.Lerp(0, r.localPosition.y, Time.deltaTime * 10), 0);
+                        //r.localPosition = new Vector3(Mathf.Lerp(r.localPosition.x, num, Time.deltaTime * 15), Mathf.Lerp(0, 100, Time.deltaTime * 10), 0);
+                    }
+                    else
+                    {
+                        r.localPosition = new Vector3(num, 0, 0);
+                    }
 
-
-                    //t.SetSiblingIndex(transform.childCount - 1);
+                    
                 }
                 else
                 {
-                    r.localPosition = new Vector3(num, 0, 0);
-                    //r.localScale = new Vector3(1, 1, 1);
+                    if (Vector3.Distance(r.localPosition, new Vector3(num, 0)) < 300)
+                    {
+                        r.localPosition = new Vector3(Mathf.Lerp(r.localPosition.x, num, Time.deltaTime * 15), Mathf.Lerp(r.localPosition.y, 0, Time.deltaTime * 10), 0);
+                    }
+                    else
+                    {
+                        r.localPosition = new Vector3(num, 0, 0);
+                    } 
                 }
 
 
             }
             //recalc = false;
         }
-	}
+	}    
 
-    public void AddChild(Transform t)
-    {
-        t.GetComponentInParent<HorizontalLayout>().RemoveChild(t);
-        children.Add(t);
-        t.SetParent(transform);
-    }
-
-    public void AddChildToPos(int place, Transform t)
-    {
-        t.GetComponentInParent<HorizontalLayout>().RemoveChild(t);
-        children.Insert(place, t);
-        t.SetParent(transform);
-        t.SetSiblingIndex(place);
-    }
-
-    public void RemoveChild(Transform t)
-    {
-        Debug.Log("Remove " + t.name + " from " + transform.name);
-        children.Remove(t);
-    }
 
 }

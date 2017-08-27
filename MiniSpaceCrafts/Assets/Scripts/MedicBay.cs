@@ -1,11 +1,10 @@
 ﻿public class MedicBay : ShipPartBase
 {
     public float healPercentPerCard;
-
-    public MedicBay(float maxHealth, int level, float healPercentPerCard) : base(maxHealth, level)
+    
+    public MedicBay(int level, string name, FType type, float maxHealth, float healPercentPerCard) : base(level, name, type, maxHealth)
     {
         this.healPercentPerCard = healPercentPerCard;
     }
-
 }
 
